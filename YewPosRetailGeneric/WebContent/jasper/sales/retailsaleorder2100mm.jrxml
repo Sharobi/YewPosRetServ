@@ -1,0 +1,2163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="retailsalebill2100mm" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="585" leftMargin="5" rightMargin="5" topMargin="5" bottomMargin="5" uuid="23e68270-b132-4c52-8768-024db2e7e617">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="469"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="bill_style" fill="Solid"/>
+	<parameter name="W_CompanyID" class="java.lang.Integer"/>
+	<parameter name="W_StoreID" class="java.lang.Integer"/>
+	<parameter name="W_SaleOrderID" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[0]]></defaultValueExpression>
+	</parameter>
+	<parameter name="W_IsReprint" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[0]]></defaultValueExpression>
+	</parameter>
+	<parameter name="W_ReprintCount" class="java.lang.Integer"/>
+	<parameter name="W_Note1" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="W_Note2" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="W_Logo_Path" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select a.item_id
+            ,a.item_name
+            ,a.batch_no
+            ,a.expiry_date
+            ,a.expiry_date_format
+            ,a.pack_unit_id
+            ,a.pack_unit_name
+            ,a.pack_qty
+            ,a.conversion
+            ,a.loose_unit_id
+            ,a.loose_qty
+            ,a.mrp
+            ,a.rate
+            ,a.mrp_per_unit
+            ,a.rate_per_unit
+            ,a.disc_per
+            ,a.disc
+            ,a.tot_amount
+            ,a.calculate_loose_qty
+
+
+
+            ,a.tax_id
+            ,a.tax_name
+            ,a.tax_percentage
+            ,a.tax_amount
+            ,a.is_group_tax
+            ,a.tax_mode
+
+            ,a.SKU
+            ,a.HSN_code
+            ,a.purchase_cost_per_unit
+
+            ,a.total_amount
+            ,a.taxable_amount
+
+            ,a.CGST
+            ,a.CGST_percentage
+            ,a.SGST
+            ,a.SGST_percentage
+            ,a.IGST
+            ,a.IGST_percentage
+
+
+            ,a.CGST_print
+            ,a.SGST_print
+            ,a.IGST_print
+
+            ,a.net_content
+            ,a.group_id
+            ,a.schedule_id
+            ,a.manufacturer_id
+            ,a.manufacturer_name
+            ,a.manufacturer_code
+
+            ,a.customer_name
+            ,a.customer_phone
+            ,a.customer_address
+	  ,a.customer_pan
+            ,a.customer_gst
+            ,a.customer_dl
+            ,a.doctor_name
+
+            ,a.inv_no
+            ,a.inv_date
+            ,a.inv_time
+            ,a.due_date
+            ,a.store_name
+            ,a.store_address
+			,a.store_post
+			,a.store_state
+			,a.store_country
+            ,a.drug_license_no
+            ,a.GSTIN_No
+            ,a.store_phone
+			,a.store_email
+            ,a.total_taxable_amount
+            ,a.net_amount
+            ,a.net_amount_words
+
+
+            ,cast(a.special_disc_amount as char(8)) special_disc_amount_print
+            ,cast(a.roundoff as char(8)) roundoff_print
+            ,cast(a.gross_amount as char(8)) gross_amount_print
+            ,cast(a.disc_amount as char(8)) disc_amount_print
+
+            ,cast(a.retrun_amount as char(8))  retrun_amount
+            ,cast(a.bill_amount as char(8)) bill_amount
+            ,cast(a.total_tax_amount as char(8)) total_tax_amount
+
+
+            ,a.cash_memo_header
+            ,a.amount_lable
+            ,a.reprint_leble
+            ,a.is_exclusive
+
+            ,a.Tax_lable
+            ,a.Taxable_lable
+            ,a.CGST_lable
+            ,a.CGST_AMT_lable
+            ,a.SGST_lable
+            ,a.SGST_AMT_lable
+            ,a.schedule_name
+			,a.remarks
+			,a.item_remarks
+			,a.user_name
+			,a.user_code
+			,a.salesman_name
+ from
+ (
+   select x.item_id
+            ,x.item_name
+            ,x.batch_no
+            ,x.expiry_date
+            ,x.expiry_date_format
+            ,x.pack_unit_id
+            ,x.pack_unit_name
+            ,x.pack_qty
+            ,x.conversion
+            ,x.loose_unit_id
+            ,x.loose_qty
+            ,x.mrp
+            ,x.rate
+            ,x.mrp_per_unit
+            ,x.rate_per_unit
+            ,x.disc_per
+            ,x.disc
+            ,x.tot_amount
+            ,x.calculate_loose_qty
+
+
+
+            ,x.tax_id
+            ,x.tax_name
+            ,x.tax_percentage
+            ,x.tax_amount
+            ,x.is_group_tax
+            ,x.tax_mode
+
+            ,x.SKU
+            ,x.HSN_code
+            ,x.purchase_cost_per_unit
+
+            ,x.total_amount
+            ,x.taxable_amount
+
+            ,sum(x.CGST) CGST
+            ,sum(x.CGST_percentage) CGST_percentage
+            ,sum(x.SGST) SGST
+            ,sum(x.SGST_percentage) SGST_percentage
+            ,sum(x.IGST) IGST
+            ,sum(x.IGST_percentage) IGST_percentage
+
+
+,concat(cast(sum(x.CGST) as char(8)),'(',cast(cast(sum(x.CGST_percentage) as decimal(18,1)) as char(8)),'%)') CGST_print
+            ,concat(cast(sum(x.SGST) as char(8)),'(',cast(cast(sum(x.SGST_percentage) as decimal(18,1)) as char(8)),'%)') SGST_print
+            ,concat(cast(sum(x.IGST) as char(8)),'(',cast(cast(sum(x.IGST_percentage) as decimal(18,1)) as char(8)),'%)') IGST_print
+
+            ,x.net_content
+            ,x.group_id
+            ,x.schedule_id
+            ,x.manufacturer_id
+            ,x.manufacturer_name
+            ,x.manufacturer_code
+
+            ,ifnull(x.customer_name,'') customer_name
+            ,ifnull(x.customer_phone,'') customer_phone
+            ,ifnull(x.customer_address,'')  customer_address
+            ,ifnull(x.customer_pan,'')  customer_pan
+            ,ifnull(x.customer_gst,'')  customer_gst
+            ,ifnull(x.customer_dl,'') customer_dl
+            ,ifnull(x.doctor_name,'') doctor_name
+
+            ,ifnull(x.inv_no,'') inv_no
+            ,x.inv_date
+            ,x.inv_time
+            ,x.due_date
+            ,x.store_name
+            ,x.store_address
+			,x.store_post
+			,x.store_state
+			,x.store_country
+            ,x.drug_license_no
+            ,ifnull(x.GSTIN_No,'') GSTIN_No
+            ,x.store_phone
+			,x.store_email
+            ,x.total_taxable_amount
+            ,x.net_amount
+            ,(select AmountToWords(x.net_amount) ) net_amount_words
+
+            ,x.special_disc_amount
+            ,x.roundoff
+            ,x.gross_amount
+            ,x.disc_amount
+
+
+            ,0 retrun_amount
+            ,x.net_amount bill_amount
+
+
+            ,x.cash_memo_header
+            ,x.amount_lable
+            ,x.reprint_leble
+            ,x.is_exclusive
+
+            ,x.Tax_lable
+            ,x.Taxable_lable
+            ,x.CGST_lable
+            ,x.CGST_AMT_lable
+            ,x.SGST_lable
+            ,x.SGST_AMT_lable
+            ,x.schedule_name
+            ,x.total_tax_amount
+			,x.remarks
+			,x.item_remarks
+			,x.user_name
+			,x.user_code
+			,x.salesman_name
+  from
+  (
+      select sd.item_id
+            ,i.name item_name
+            ,sd.batch_no
+            ,sd.expiry_date
+            ,convert(DATE_FORMAT(sd.expiry_date, '%m/%y'),CHAR CHARACTER SET utf8) expiry_date_format
+
+            ,sd.pack_unit_id
+            ,u.code pack_unit_name
+            ,sd.pack_qty
+            ,sd.conversion
+            ,i.loose_unit_id
+            ,sd.loose_qty
+            ,sd.mrp
+            ,sd.rate
+            ,0 mrp_per_unit
+            ,sd.sale_rate rate_per_unit
+            ,sd.disc_per
+            ,sd.disc
+            ,sd.net_amount tot_amount
+            ,((sd.pack_qty*sd.conversion)+sd.loose_qty) calculate_loose_qty
+
+
+            ,sd.tax_id
+            ,t.name tax_name
+            ,sd.tax_percentage
+            ,sd.tax_amount
+            ,sd.is_group_tax
+            ,sd.tax_mode
+
+            ,i.SKU
+            ,i.HSN_code
+            ,0 purchase_cost_per_unit
+
+
+            ,(sd.gross_amount-ifnull(sd.disc,0)) taxable_amount
+            ,(sd.gross_amount) total_amount
+            --
+            ,case
+                   when tm.tax_mode='CGST' then (sd.tax_amount*tm.percentage/sd.tax_percentage)
+                   else 0 end
+            CGST
+            ,case
+                   when tm.tax_mode='CGST' then tm.percentage
+                   else 0 end
+            CGST_percentage
+            ,case
+                   when tm.tax_mode='SGST' then (sd.tax_amount*tm.percentage/sd.tax_percentage)
+                   else 0 end
+            SGST
+            ,case
+                   when tm.tax_mode='SGST' then tm.percentage
+                   else 0 end
+            SGST_percentage
+            ,case
+                   when tm.tax_mode='IGST' then (sd.tax_amount*tm.percentage/sd.tax_percentage)
+                   else 0 end
+            IGST
+            ,case
+                   when tm.tax_mode='IGST' then tm.percentage
+                   else 0 end
+            IGST_percentage
+
+            ,i.net_content
+            ,i.group_id
+            ,i.schedule_id
+            ,i.manufacturer_id
+            ,m.name manufacturer_name
+            ,substring(m.code,-3) manufacturer_code
+
+            ,ifnull(s.customer_name,c.name) customer_name
+            ,ifnull(s.customer_phone,c.phone_no) customer_phone
+            ,ifnull(s.customer_address,c.address) customer_address
+			,ifnull(c.pan_no,'') customer_pan
+            ,ifnull(c.gst_no,'') customer_gst
+            ,ifnull(c.dl_no,'') customer_dl
+            ,ifnull(s.doctor_name,d.name) doctor_name
+
+            ,s.inv_no
+            ,s.inv_date
+            ,'' inv_time
+            ,s.due_date
+            ,st.name store_name
+			,st.address store_address
+            ,st.postcode store_post
+			,st.state store_state
+			,st.country store_country
+            ,concat('D.L No.:',st.dl_licence_no) drug_license_no
+            ,st.tax_reg_no GSTIN_No
+            ,st.phone store_phone
+			,st.email store_email
+            ,0 special_disc_amount
+            ,s.gross_amount
+            ,s.disc_amount
+            ,s.net_amount
+            ,(s.gross_amount-ifnull(s.disc_amount,0)) total_taxable_amount
+            ,s.roundoff
+
+            ,case
+              when st.is_exclusive=1 then 'Sales Quotation'
+              else 'Bill of Supply' end cash_memo_header
+            ,case
+              when st.is_exclusive=1 then 'Taxable Amt'
+              else 'Amt**' end amount_lable
+            ,case -- for isReprint
+              when $P{W_IsReprint}=0 then ''
+              else 'Duplicate Copy' end reprint_leble
+             ,st.is_exclusive
+            ,case
+              when st.is_exclusive=1 then 'Tax%'
+              else '' end Tax_lable
+            ,case
+              when st.is_exclusive=1 then 'Taxable'
+              else '' end Taxable_lable
+            ,case
+              when st.is_exclusive=1 then 'CGST%'
+              else '' end CGST_lable
+            ,case
+              when st.is_exclusive=1 then 'CGST AMT'
+              else '' end CGST_AMT_lable
+            ,case
+              when st.is_exclusive=1 then 'SGST%'
+              else '' end SGST_lable
+            ,case
+              when st.is_exclusive=1 then 'SGST AMT'
+              else '' end SGST_AMT_lable
+
+            ,concat(substring(sch.name,1,1),substring(replace(sch.name,' ',''),-2)) schedule_name
+            ,s.tax_amount total_tax_amount
+			,s.remarks
+			,ifnull(sd.remarks,'') item_remarks
+			,usr.user_name
+			,usr.user_code
+			,case when sd.salesman_id=0 then '' else sm.name end salesman_name
+      from gen_m_store st
+      inner join sal_t_sale_order s on st.id = s.store_id
+      inner join sal_t_sale_order_details sd on s.id=sd.sale_order_id
+      inner join in_m_item i on sd.item_id=i.id
+      inner join in_m_unit u on i.pack_unit_id=u.id
+      left outer join in_m_tax t on sd.tax_id=t.id
+      left outer join in_m_tax_group_details tm on sd.tax_id=tm.parent_id
+      left outer join in_m_manufacturer m on i.manufacturer_id=m.id
+      left outer join in_m_schedule sch on i.schedule_id=sch.id
+      left outer join in_m_customer c on s.customer_id=c.id
+      left outer join in_m_doctor d on s.doctor_id=d.id
+	  left outer join in_m_salesman sm on sd.salesman_id=sm.id
+	  left outer join gen_m_user usr on s.created_by=usr.id
+      where s.company_id = $P{W_CompanyID}
+      and s.store_id = $P{W_StoreID}
+      and st.id=$P{W_StoreID}
+      and sd.sale_order_id=$P{W_SaleOrderID}
+
+  )x
+  group by   x.item_id
+            ,x.item_name
+            ,x.batch_no
+            ,x.expiry_date
+            ,x.expiry_date_format
+            ,x.pack_unit_id
+            ,x.pack_unit_name
+            ,x.pack_qty
+            ,x.conversion
+            ,x.loose_unit_id
+            ,x.loose_qty
+            ,x.mrp
+            ,x.rate
+            ,x.mrp_per_unit
+            ,x.rate_per_unit
+            ,x.disc_per
+            ,x.disc
+            ,x.tot_amount
+            ,x.calculate_loose_qty
+
+
+
+            ,x.tax_id
+            ,x.tax_name
+            ,x.tax_percentage
+            ,x.tax_amount
+            ,x.is_group_tax
+            ,x.tax_mode
+
+            ,x.SKU
+            ,x.HSN_code
+            ,x.purchase_cost_per_unit
+
+            ,x.total_amount
+            ,x.taxable_amount
+
+            ,x.net_content
+            ,x.group_id
+            ,x.schedule_id
+            ,x.manufacturer_id
+            ,x.manufacturer_name
+            ,x.manufacturer_code
+
+            ,x.customer_name
+            ,x.customer_phone
+            ,x.customer_address
+            ,x.doctor_name
+
+            ,x.inv_no
+            ,x.inv_date
+            ,x.inv_time
+            ,x.due_date
+            ,x.store_name
+            ,x.store_address
+			,x.store_post
+			,x.store_state
+			,x.store_country
+            ,x.drug_license_no
+            ,x.GSTIN_No
+            ,x.store_phone
+			,x.store_email
+            ,x.special_disc_amount
+            ,x.gross_amount
+            ,x.disc_amount
+            ,x.total_taxable_amount
+            ,x.roundoff
+            ,x.net_amount
+
+            ,x.cash_memo_header
+            ,x.amount_lable
+            ,x.reprint_leble
+            ,x.is_exclusive
+
+            ,x.Tax_lable
+            ,x.Taxable_lable
+            ,x.CGST_lable
+            ,x.CGST_AMT_lable
+            ,x.SGST_lable
+            ,x.SGST_AMT_lable
+            ,x.schedule_name
+            ,x.total_tax_amount
+)a
+;]]>
+	</queryString>
+	<field name="item_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="item_name" class="java.lang.String"/>
+	<field name="batch_no" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="expiry_date" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="expiry_date_format" class="java.lang.String"/>
+	<field name="pack_unit_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="pack_unit_name" class="java.lang.String"/>
+	<field name="pack_qty" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="conversion" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="loose_unit_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="loose_qty" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="mrp" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="rate" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="mrp_per_unit" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="rate_per_unit" class="java.math.BigDecimal"/>
+	<field name="disc_per" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="disc" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="tot_amount" class="java.math.BigDecimal"/>
+	<field name="calculate_loose_qty" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="tax_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="tax_name" class="java.lang.String"/>
+	<field name="tax_percentage" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="tax_amount" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="is_group_tax" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="tax_mode" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="SKU" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="HSN_code" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="purchase_cost_per_unit" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="total_amount" class="java.math.BigDecimal"/>
+	<field name="taxable_amount" class="java.math.BigDecimal"/>
+	<field name="CGST" class="java.math.BigDecimal"/>
+	<field name="CGST_percentage" class="java.math.BigDecimal"/>
+	<field name="SGST" class="java.math.BigDecimal"/>
+	<field name="SGST_percentage" class="java.math.BigDecimal"/>
+	<field name="IGST" class="java.math.BigDecimal"/>
+	<field name="IGST_percentage" class="java.math.BigDecimal"/>
+	<field name="CGST_print" class="java.lang.String"/>
+	<field name="SGST_print" class="java.lang.String"/>
+	<field name="IGST_print" class="java.lang.String"/>
+	<field name="net_content" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="group_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="schedule_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="manufacturer_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="manufacturer_name" class="java.lang.String"/>
+	<field name="manufacturer_code" class="java.lang.String"/>
+	<field name="customer_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="customer_phone" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="customer_address" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="customer_pan" class="java.lang.String"/>
+	<field name="customer_gst" class="java.lang.String"/>
+	<field name="customer_dl" class="java.lang.String"/>
+	<field name="doctor_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="inv_no" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="inv_date" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="inv_time" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="due_date" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="store_name" class="java.lang.String"/>
+	<field name="store_address" class="java.lang.String"/>
+	<field name="store_post" class="java.lang.String"/>
+	<field name="store_state" class="java.lang.String"/>
+	<field name="store_country" class="java.lang.String"/>
+	<field name="drug_license_no" class="java.lang.String"/>
+	<field name="GSTIN_No" class="java.lang.String"/>
+	<field name="store_phone" class="java.lang.String"/>
+	<field name="store_email" class="java.lang.String"/>
+	<field name="total_taxable_amount" class="java.math.BigDecimal"/>
+	<field name="net_amount" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="net_amount_words" class="java.lang.String"/>
+	<field name="special_disc_amount_print" class="java.lang.String"/>
+	<field name="roundoff_print" class="java.lang.String"/>
+	<field name="gross_amount_print" class="java.lang.String"/>
+	<field name="disc_amount_print" class="java.lang.String"/>
+	<field name="retrun_amount" class="java.lang.String"/>
+	<field name="bill_amount" class="java.lang.String"/>
+	<field name="total_tax_amount" class="java.lang.String"/>
+	<field name="cash_memo_header" class="java.lang.String"/>
+	<field name="amount_lable" class="java.lang.String"/>
+	<field name="reprint_leble" class="java.lang.String"/>
+	<field name="is_exclusive" class="java.lang.Integer">
+		<fieldDescription><![CDATA[0-- tax inclusive on rate/mrp :: 1-- tax exclusive on rate/mrp]]></fieldDescription>
+	</field>
+	<field name="Tax_lable" class="java.lang.String"/>
+	<field name="Taxable_lable" class="java.lang.String"/>
+	<field name="CGST_lable" class="java.lang.String"/>
+	<field name="CGST_AMT_lable" class="java.lang.String"/>
+	<field name="SGST_lable" class="java.lang.String"/>
+	<field name="SGST_AMT_lable" class="java.lang.String"/>
+	<field name="schedule_name" class="java.lang.String"/>
+	<field name="remarks" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="item_remarks" class="java.lang.String"/>
+	<field name="user_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="user_code" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="salesman_name" class="java.lang.String"/>
+	<variable name="currentPage" class="java.lang.Integer" calculation="DistinctCount">
+		<variableExpression><![CDATA[$V{PAGE_NUMBER}]]></variableExpression>
+		<initialValueExpression><![CDATA[]]></initialValueExpression>
+	</variable>
+	<variable name="total_cgst" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{CGST}]]></variableExpression>
+	</variable>
+	<variable name="total_sgst" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{SGST}]]></variableExpression>
+	</variable>
+	<variable name="total_igst" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{IGST}]]></variableExpression>
+	</variable>
+	<variable name="total_item" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{calculate_loose_qty}]]></variableExpression>
+	</variable>
+	<title>
+		<band height="291">
+			<textField isBlankWhenNull="true">
+				<reportElement x="142" y="28" width="300" height="13" uuid="d030fffc-3bb4-4163-b614-5860ee880ff7"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="10" isBold="true" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{store_name}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="142" y="54" width="300" height="13" uuid="bd98f7fe-ed0b-4acc-9299-72fb37574952"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{store_address}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="142" y="67" width="300" height="13" uuid="9c81e36e-b06b-409e-b548-196b937503d9"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Kolkata-"+$F{store_post}+" ("+$F{store_state}+") "+$F{store_country}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="60" y="225" width="228" height="13" uuid="a6e201c7-005d-40e8-b0f0-02bfb520d66b"/>
+				<textElement textAlignment="Left">
+					<font fontName="SansSerif" size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{customer_name}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="60" y="238" width="228" height="13" uuid="eec27078-ebfc-4b6f-a255-82603147d690"/>
+				<textElement textAlignment="Left">
+					<font fontName="SansSerif" size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{customer_address}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="60" y="251" width="228" height="13" uuid="17f6a985-2a8b-4de6-9061-5fc3c3e88dbf"/>
+				<textElement textAlignment="Left">
+					<font fontName="SansSerif" size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{customer_phone}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="104" y="264" width="184" height="13" uuid="8d06aa80-d241-4008-aeff-21952c90e766"/>
+				<textElement textAlignment="Left">
+					<font fontName="SansSerif" size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{customer_gst}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="142" y="2" width="300" height="13" uuid="85914903-6c3e-48a3-b18e-7f51aa76f793"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="10" isBold="true" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cash_memo_header}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="472" y="2" width="112" height="13" uuid="d4eb8678-36c6-4a52-a2d3-f5f52443fe57"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{reprint_leble}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="142" y="41" width="300" height="13" uuid="4fe7c1b7-5b23-426e-92ac-894d2aed649d"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["UNIT STELLER FURNISHINGS & CARPETS"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="142" y="80" width="300" height="13" uuid="aeb7455d-6370-4aea-bdc7-6ac6ff0c3dfe"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{store_email}+" "+$F{store_phone}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="212" width="288" height="13" uuid="108e13de-497b-4ff6-a514-b3fa230d09f4"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font fontName="SansSerif" size="9" isBold="true" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" Details of receiver (Billed to)"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="288" y="212" width="297" height="13" uuid="dd28a7f2-5bf3-4528-9b9a-f6ed016f187d"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font fontName="SansSerif" size="9" isBold="true" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" Details of Consignee (Shipped to)"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="125" y="121" width="163" height="13" uuid="18af5b3b-eb44-4231-bdb6-ccdab20db906"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font fontName="SansSerif" size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{GSTIN_No}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="125" y="134" width="163" height="13" uuid="f561d5ea-fd47-4397-836c-c566dfa9d1ec"/>
+				<textElement textAlignment="Left">
+					<font fontName="SansSerif" size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{inv_no}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd-MM-yyyy" isBlankWhenNull="true">
+				<reportElement x="125" y="147" width="163" height="13" uuid="003422d6-5cbf-48eb-be1a-e1203484831c"/>
+				<textElement textAlignment="Left">
+					<font fontName="SansSerif" size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{inv_date}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="125" y="160" width="163" height="13" uuid="3eb237ab-cb66-4c47-bf12-edeb1b7c1717"/>
+				<textElement textAlignment="Left">
+					<font fontName="SansSerif" size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="125" y="173" width="163" height="13" uuid="a8918973-1c7c-456c-904f-c47bd9c876b3"/>
+				<textElement textAlignment="Left">
+					<font fontName="SansSerif" size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{salesman_name}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="288" y="121" width="297" height="13" uuid="19621dea-e82b-42cb-af28-20b5ab92297c"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font fontName="SansSerif" size="9" isBold="true" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" Transportation Mode:(Apply for Supply of Goods Only)"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="413" y="134" width="172" height="13" uuid="e298ad74-6cf4-4c44-aed5-1442c84ede41"/>
+				<box>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font fontName="SansSerif" size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd-MM-yyyy" isBlankWhenNull="true">
+				<reportElement x="413" y="147" width="172" height="13" uuid="02ec144a-5443-4a18-869f-ee0a8073e26c"/>
+				<box>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font fontName="SansSerif" size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{due_date}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="413" y="160" width="172" height="13" uuid="ca0c6757-044d-42b7-8d65-9cbd4750234f"/>
+				<box>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font fontName="SansSerif" size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Bill-to Address"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="413" y="173" width="172" height="13" uuid="0be183f1-b0f7-4841-9b17-05a47c0bc7e8"/>
+				<box>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font fontName="SansSerif" size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="413" y="186" width="172" height="13" uuid="561bdd02-f052-4111-966f-7e22a91327b3"/>
+				<box>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font fontName="SansSerif" size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="121" width="125" height="13" uuid="924fda4b-1507-41d0-9090-027b5ce4f778"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font fontName="SansSerif" size="9" isBold="true" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" GSTN Number"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="134" width="125" height="13" uuid="6db91170-e518-4577-a214-84da732a6af2"/>
+				<box>
+					<leftPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font fontName="SansSerif" size="9" isBold="true" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" Quotation Number"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="147" width="125" height="13" uuid="994639ae-b73b-4a37-8aeb-4e17441ebf0c"/>
+				<box>
+					<leftPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font fontName="SansSerif" size="9" isBold="true" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" Quotation Date"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="160" width="125" height="13" uuid="44c18731-35d7-42b4-ae38-3914d5378f6d"/>
+				<box>
+					<leftPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font fontName="SansSerif" size="9" isBold="true" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" External Document No"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="173" width="125" height="13" uuid="39eed1a0-dd03-455b-83b2-e56e1922098f"/>
+				<box>
+					<leftPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font fontName="SansSerif" size="9" isBold="true" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" Salesperson Name"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="288" y="134" width="125" height="13" uuid="5a0006e1-1559-4da6-b28d-9278338a5b57"/>
+				<box>
+					<leftPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font fontName="SansSerif" size="9" isBold="true" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" Veh. No."]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="288" y="147" width="125" height="13" uuid="a740d8d7-5848-4b7d-8e0d-4e815973b780"/>
+				<box>
+					<leftPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font fontName="SansSerif" size="9" isBold="true" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" Date & Time of supply"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="288" y="160" width="125" height="13" uuid="8383d00f-2470-49a6-9602-ac19509b84ae"/>
+				<box>
+					<leftPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font fontName="SansSerif" size="9" isBold="true" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" Place of Supply"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="288" y="173" width="125" height="13" uuid="be317608-3655-425b-a0fd-8c295defe7f6"/>
+				<box>
+					<leftPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font fontName="SansSerif" size="9" isBold="true" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" Tailor"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="288" y="186" width="125" height="13" uuid="08c365fe-e741-41d7-ba23-48acb7df90c6"/>
+				<box>
+					<leftPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font fontName="SansSerif" size="9" isBold="true" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" Interior"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="225" width="60" height="13" uuid="1a6b879d-9d1f-4a8e-b54a-583a1f9a47d1"/>
+				<box>
+					<leftPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font fontName="SansSerif" size="9" isBold="true" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" Name:"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="238" width="60" height="13" uuid="7bdfa6d8-93e6-4e34-a43e-decf3f76268d"/>
+				<box>
+					<leftPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font fontName="SansSerif" size="9" isBold="true" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" Address:"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="251" width="60" height="13" uuid="4159aee8-f256-4860-ba3a-5e87ee09ce25"/>
+				<box>
+					<leftPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font fontName="SansSerif" size="9" isBold="true" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" Phone:"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="264" width="104" height="13" uuid="0cb299b5-b42e-4625-9a31-a92ad21f82f0"/>
+				<box>
+					<leftPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font fontName="SansSerif" size="9" isBold="true" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" GSTIN/Unique ID:"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="288" y="225" width="60" height="13" uuid="46ad404d-359e-45f7-abc3-7a707cebe1b5"/>
+				<box>
+					<leftPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font fontName="SansSerif" size="9" isBold="true" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" Name:"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="288" y="238" width="60" height="13" uuid="68ad4656-3a6e-4a40-bc5b-9fd3055155ad"/>
+				<box>
+					<leftPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font fontName="SansSerif" size="9" isBold="true" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" Address:"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="288" y="251" width="104" height="13" uuid="8aa7bf66-03e4-4c93-8fcf-06cb7949e431"/>
+				<box>
+					<leftPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font fontName="SansSerif" size="9" isBold="true" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" GSTIN/Unique ID:"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="348" y="225" width="237" height="13" uuid="7681c595-30e4-4a4e-9d92-6a570cb9320a"/>
+				<box>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font fontName="SansSerif" size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{customer_name}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="348" y="238" width="237" height="13" uuid="defc6294-bd65-434d-8e4e-c19315a12fe2"/>
+				<box>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font fontName="SansSerif" size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{customer_address}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="392" y="251" width="193" height="13" uuid="1b12aa0f-486a-497e-9271-8948ba0014dc"/>
+				<box>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font fontName="SansSerif" size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{customer_gst}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="472" y="15" width="112" height="13" uuid="bd1203c6-5277-4171-a4ae-142f3a670f81"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of "+$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="472" y="28" width="112" height="13" uuid="70beac63-cd40-4d79-b47b-65ffe2b91b4e"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{user_code}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="142" y="15" width="300" height="13" uuid="05664f86-b1a9-41bf-901d-1e474d5f39ed"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<image onErrorType="Blank">
+				<reportElement x="18" y="28" width="118" height="52" uuid="ec1e8475-de84-49b9-ae97-2cd93939d3ee"/>
+				<imageExpression><![CDATA[$P{W_Logo_Path}+"\\logo_"+$P{W_StoreID}+".png"]]></imageExpression>
+			</image>
+			<textField isBlankWhenNull="true">
+				<reportElement x="142" y="93" width="300" height="13" uuid="d696e9fb-f9d7-4cf0-bc68-6124f084f239"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="142" y="106" width="300" height="13" uuid="cac9c6d4-b742-44d5-a1c0-2915389acf75"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<frame>
+				<reportElement x="0" y="0" width="585" height="121" uuid="aaf91977-ca25-4022-bfbe-329d536cd630"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+			</frame>
+			<textField isBlankWhenNull="true">
+				<reportElement x="288" y="199" width="297" height="13" uuid="c48ca845-b523-43ac-b726-9aacfac7cd47"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font fontName="SansSerif" size="9" isBold="false" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="186" width="288" height="13" uuid="d9b8dfd5-a5e4-46c2-90e4-9230402e144b"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font fontName="SansSerif" size="9" isBold="true" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="199" width="288" height="13" uuid="803c949a-c7d7-44f7-b2f2-d6d126c743ed"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font fontName="SansSerif" size="9" isBold="true" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="288" y="264" width="297" height="13" uuid="3dcb52f8-ac35-45b8-a905-3503c69f33fd"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font fontName="SansSerif" size="9" isBold="true" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="277" width="288" height="13" uuid="c4a5502b-8c2e-462a-862c-e8e10eb54560"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font fontName="SansSerif" size="9" isBold="true" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="288" y="277" width="297" height="13" uuid="04bbfb85-d0be-41cc-9c0a-9d2fbea23a23"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font fontName="SansSerif" size="9" isBold="true" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="24" splitType="Prevent">
+			<staticText>
+				<reportElement x="56" y="0" width="85" height="22" uuid="3ab990e7-5a6f-4e87-9a8e-9659f9387a15"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="8" isBold="true" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[Description]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="141" y="0" width="38" height="22" uuid="9605bebd-cf7f-468f-8fd8-850c76699951"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="8" isBold="true" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[HSN/SAC]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="215" y="0" width="24" height="22" uuid="10f44a0e-5e66-4a77-8e09-4ad6239bdf3e"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="8" isBold="true" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[Qty]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="528" y="11" width="26" height="11" uuid="83b878b0-9769-4d03-8561-84c58d832da4"/>
+				<box>
+					<leftPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="8" isBold="true" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[Rate]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="554" y="11" width="31" height="11" uuid="de2e3d57-660c-4982-aaff-82fc70f80737"/>
+				<box>
+					<leftPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="8" isBold="true" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[Amt]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="239" y="0" width="32" height="22" uuid="104da173-6439-48ec-b8eb-89659bead2ff"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="8" isBold="true" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[UOM]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="271" y="0" width="34" height="22" uuid="986454b7-4105-4d7b-a0c0-e14b9d8621b7"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="8" isBold="true" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[Rate]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="305" y="0" width="38" height="22" uuid="15583dbd-ddad-47f4-8390-52174b15b3ff"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="8" isBold="true" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="343" y="0" width="32" height="22" uuid="102c0e1a-6e04-45ff-87bc-56c9d2117dc3"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="8" isBold="true" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[Dis]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="22" width="585" height="1" uuid="fe0af772-8bf5-45f1-8f97-cc3bf1c5b0fd"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="0" y="0" width="17" height="22" uuid="5588abf8-1c63-40b5-a8b6-d3b1771317b1"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="8" isBold="true" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[SL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="179" y="0" width="36" height="22" uuid="1bad85e4-76d4-489f-9772-76ff3d6bed91"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="8" isBold="true" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[GST Group Type]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="375" y="0" width="39" height="22" uuid="25d786db-5a12-4236-9e9d-05ab81f2b0a1"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="8" isBold="true" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[Taxable Value]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="497" y="11" width="31" height="11" uuid="7c5678f1-fa8a-4ad9-9dd5-93fdfbb2ebe0"/>
+				<box>
+					<leftPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="8" isBold="true" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[Amt]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="414" y="0" width="57" height="11" uuid="044900eb-2107-4222-87dd-a6c79cf8ca9a"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="8" isBold="true" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[CGST]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="471" y="0" width="57" height="11" uuid="925641d3-a24f-487b-8700-1317731f0c37"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="8" isBold="true" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[SGST]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="17" y="0" width="39" height="22" uuid="0d6a0669-1bd0-481d-98c0-4b2fb0cc60f9"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="8" isBold="true" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[Barcode]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="528" y="0" width="57" height="11" uuid="f1e4111c-cbb7-4acf-bf69-c859f790afd6"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="8" isBold="true" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[IGST]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="471" y="11" width="26" height="11" uuid="f58c25e6-c106-43cd-b651-efddee1135bf"/>
+				<box>
+					<leftPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="8" isBold="true" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[Rate]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="414" y="11" width="26" height="11" uuid="d19d3fda-4c3b-439a-87d3-3b86c9399287"/>
+				<box>
+					<leftPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="8" isBold="true" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[Rate]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="440" y="11" width="31" height="11" uuid="ae6e9532-7002-416b-8202-6a90b76bcd63"/>
+				<box>
+					<leftPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="8" isBold="true" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[Amt]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="13">
+			<textField isBlankWhenNull="true">
+				<reportElement x="56" y="0" width="85" height="13" uuid="a129d402-a2e8-4715-a258-aebd86825721"/>
+				<box leftPadding="2"/>
+				<textElement textAlignment="Left">
+					<font fontName="SansSerif" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{item_remarks}.isEmpty()?$F{item_name}:$F{item_remarks}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="141" y="0" width="38" height="13" uuid="1be6ec70-8766-49a0-a748-52b940666245"/>
+				<box>
+					<leftPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{HSN_code}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="215" y="0" width="24" height="13" uuid="fa267129-e454-49d1-9720-9bfe7eb7b614"/>
+				<box>
+					<leftPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{calculate_loose_qty}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="239" y="0" width="32" height="13" uuid="d7460eb0-905f-4a6b-b367-db994d6d916f"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{pack_unit_name}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="271" y="0" width="34" height="13" uuid="041169cd-d866-4294-9eb5-9429b6926d34"/>
+				<box>
+					<leftPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{rate_per_unit}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="343" y="0" width="32" height="13" uuid="2bcfeedc-27c1-4c46-81cc-7b7b4936cbc7"/>
+				<box>
+					<leftPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{disc}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="375" y="0" width="39" height="13" uuid="3ea0969d-8e94-4e30-a30d-c7ace271d8f6"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{taxable_amount}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="17" height="13" uuid="8dc4ed82-961b-4340-aa47-d3c539ca5372"/>
+				<box>
+					<leftPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="179" y="0" width="36" height="13" uuid="a5b72dcc-92b1-4182-b74c-6611b620d92c"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Goods"]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="440" y="0" width="31" height="13" uuid="22080ca0-9a54-4954-bdba-a4132542ba52"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CGST}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="497" y="0" width="31" height="13" uuid="38a298a6-f459-4e6c-9679-eecf406c0574"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SGST}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="17" y="0" width="39" height="13" uuid="ded035f6-1a00-44d3-abe8-767a3a52d701"/>
+				<box leftPadding="2">
+					<leftPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font fontName="SansSerif" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SKU}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="554" y="0" width="31" height="13" uuid="1565c7fa-497f-4f87-9e87-89d383b8682a"/>
+				<box>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{IGST}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="528" y="0" width="26" height="13" uuid="afe6fecd-01ad-4fdf-a69c-06c7f1174215"/>
+				<box>
+					<leftPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{IGST_percentage}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="471" y="0" width="26" height="13" uuid="3631ffc7-7771-4739-8bab-d00cedfe1fb2"/>
+				<box>
+					<leftPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SGST_percentage}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="414" y="0" width="26" height="13" uuid="d5db1c56-9520-463c-a66f-05b2d58c2f67"/>
+				<box>
+					<leftPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CGST_percentage}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="305" y="-1" width="38" height="13" uuid="f255ab94-77fd-41d8-97bd-bcbadde009a5"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{total_amount}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="231">
+			<line>
+				<reportElement x="0" y="0" width="585" height="1" uuid="8ecbd21c-911b-4f97-95c9-a0a58742977c"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="0" y="13" width="585" height="1" uuid="0f990f08-0f77-455a-8cf3-588aa79459d8"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="215" y="1" width="24" height="12" uuid="21624d1b-655b-4dde-84d5-6e0fd55e5b2d"/>
+				<box>
+					<leftPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{total_item}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="305" y="1" width="38" height="12" uuid="c6a67301-3093-48a9-a31d-e43b23bda9c7"/>
+				<box>
+					<leftPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{gross_amount_print}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="343" y="1" width="32" height="12" uuid="714d6f37-5b99-49ae-8648-5e10338c3f5d"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{disc_amount_print}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="375" y="1" width="39" height="12" uuid="c1e8bbf3-acfb-46fb-ba43-0783d9bfd0d9"/>
+				<box>
+					<leftPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{total_taxable_amount}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="440" y="1" width="31" height="12" uuid="8d6e8d24-f293-443d-9855-98fa613f60d0"/>
+				<box>
+					<leftPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{total_cgst}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="497" y="1" width="31" height="12" uuid="30becce8-cee5-4a5b-8aec-495efacbc4cb"/>
+				<box>
+					<leftPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{total_sgst}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="554" y="1" width="31" height="12" uuid="863d54aa-1f21-430d-ba87-a5efb9fe8230"/>
+				<box>
+					<leftPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{total_igst}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="0" y="14" width="414" height="13" uuid="273d7ca2-e14d-4ff2-b6e0-8c2992a5a81f"/>
+				<box>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="8" isBold="true" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Invoice Value (In Words)"]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="414" y="14" width="114" height="13" uuid="67f4ee91-aa52-413c-b233-b09dcf825aed"/>
+				<box>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font fontName="SansSerif" size="8" isBold="true" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" Total"]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="528" y="14" width="57" height="13" uuid="c8b82343-b3cc-4bcd-a667-62c4814b4f05"/>
+				<box>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="8" isBold="true" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{gross_amount_print}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="0" y="27" width="414" height="13" uuid="54b53a38-5c93-42f5-acd5-e31f8875d4bc"/>
+				<box>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="8" isBold="true" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{net_amount_words}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="414" y="27" width="114" height="13" uuid="868f022e-7608-489f-ada1-20599785cbae"/>
+				<box>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font fontName="SansSerif" size="8" isBold="true" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" Total GST Amount"]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="528" y="27" width="57" height="13" uuid="00161a2a-3e93-43a1-98ef-e2e1787f9acf"/>
+				<box>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="8" isBold="true" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{total_tax_amount}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="414" y="40" width="114" height="13" uuid="a3614e70-d1eb-42db-9c83-bbd25b088fb7"/>
+				<box>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font fontName="SansSerif" size="8" isBold="true" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" Freight Charges"]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="414" y="53" width="114" height="13" uuid="8a94fcde-ac04-423d-a08a-2c20c42547f3"/>
+				<box>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font fontName="SansSerif" size="8" isBold="true" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" Loading & Packing Charges"]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="414" y="66" width="114" height="13" uuid="0747f177-5cd7-47d7-b62a-6685d295eb2b"/>
+				<box>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font fontName="SansSerif" size="8" isBold="true" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" Insurance Charges"]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="414" y="79" width="114" height="13" uuid="31e1adc8-20f2-4bb9-9fe5-1826f28e41f9"/>
+				<box>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font fontName="SansSerif" size="8" isBold="true" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" Other Charges"]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="414" y="92" width="114" height="13" uuid="483ece41-20d3-4cd0-88b8-7a5b1de186e0"/>
+				<box>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font fontName="SansSerif" size="8" isBold="true" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" Invoice Total"]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="528" y="40" width="57" height="13" uuid="948ddea2-7af5-4d92-bbda-c2e49dc961c0"/>
+				<box>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="8" isBold="true" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[0.00]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="528" y="53" width="57" height="13" uuid="c4b0bac2-15e4-4de8-a8c7-8095f4b9e9cc"/>
+				<box>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="8" isBold="true" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[0.00]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="528" y="66" width="57" height="13" uuid="bda3fc30-2f57-40eb-a2d9-6b2217d51003"/>
+				<box>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="8" isBold="true" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[0.00]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="528" y="79" width="57" height="13" uuid="451b315a-3d4c-4a91-877b-5b64d963de85"/>
+				<box>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="8" isBold="true" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[0.00]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="528" y="92" width="57" height="13" uuid="85ace5d3-9237-4aba-9520-a8175b7b2bf5"/>
+				<box>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="8" isBold="true" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{bill_amount}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="0" y="40" width="414" height="13" uuid="6e9b15d0-4728-4056-af44-fc160bb4fc53"/>
+				<box>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="9" isBold="true" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="0" y="53" width="414" height="13" uuid="6fa074c4-0a9d-40bf-88f1-9486c26c2e42"/>
+				<box>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="9" isBold="true" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="0" y="66" width="215" height="13" uuid="21b6afbc-00f1-4cd1-81c0-0d0bf5149560"/>
+				<box>
+					<leftPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font fontName="SansSerif" size="8" isBold="true" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" Account name: SANCTUM DESIGNS PRIVATE LIMITED"]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="0" y="79" width="215" height="13" uuid="da768468-f723-45fa-81ac-f6f8eda69caf"/>
+				<box>
+					<leftPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font fontName="SansSerif" size="8" isBold="true" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" IFSC Code: UBIN0530123"]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="0" y="92" width="215" height="13" uuid="47b92c21-6c43-41c1-84a5-3b319aa8236e"/>
+				<box>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font fontName="SansSerif" size="8" isBold="true" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" Branch: BALLYGUNGE"]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="215" y="66" width="199" height="13" uuid="7b28ff3f-0273-4a73-bf61-6226945d8c71"/>
+				<box>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font fontName="SansSerif" size="8" isBold="true" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" Account No: 301201010914808"]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="215" y="79" width="199" height="13" uuid="0ce86999-1559-4329-82be-ae267b8384f9"/>
+				<box>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font fontName="SansSerif" size="8" isBold="true" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" Bank Name: Union Bank of India"]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="215" y="92" width="199" height="13" uuid="4a714b50-8dc3-41a3-af35-34adefe2f9f0"/>
+				<box>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font fontName="SansSerif" size="9" isBold="true" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="0" y="105" width="585" height="13" uuid="08e3664d-11a5-4e66-afca-f9ad59391ff8"/>
+				<box>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font fontName="SansSerif" size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="0" y="118" width="343" height="13" uuid="21aeb4dd-b9ee-4fb7-a658-5ddfbeb3b435"/>
+				<box>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font fontName="SansSerif" size="8" isBold="true" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" Certified that the Particulars given above are true and correct"]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="343" y="118" width="242" height="13" uuid="de54989c-2d17-4a3d-8706-1d8f4afcce26"/>
+				<box>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font fontName="SansSerif" size="8" isBold="true" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" Electronic Reference Number:"]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="0" y="131" width="585" height="16" uuid="350f791e-d944-42d8-b231-23468967ac7e"/>
+				<box>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font fontName="SansSerif" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="0" y="147" width="344" height="16" uuid="e805f169-6fc5-4c68-a7bc-7fcf5771c6db"/>
+				<box>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="8" isBold="true" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["TERMS AND CONDITION OF SALES"]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="344" y="147" width="241" height="16" uuid="37207ab3-2336-4173-b939-7c19a754cb3a"/>
+				<box>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="8" isBold="true" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{store_name}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="0" y="163" width="344" height="16" uuid="4120a64d-fd76-4bef-a7b6-44b89caf08ed"/>
+				<box>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font fontName="SansSerif" size="7" isBold="true" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["* No changes can be entertained after confirmation"]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="0" y="179" width="344" height="16" uuid="62a2a49f-258e-4b9b-b93b-94b926749b00"/>
+				<box>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font fontName="SansSerif" size="7" isBold="true" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["* Billing details must be confirmed at the time of confirmation of Sales Quotation"]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="0" y="195" width="344" height="16" uuid="b1743fd1-e8fa-40c8-b5c8-510ec522c866"/>
+				<box>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font fontName="SansSerif" size="7" isBold="true" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["* Payments: 50% advance and balance before delivery"]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="0" y="211" width="344" height="16" uuid="fd6075c7-9734-4ac1-8164-7e0593d1e27b"/>
+				<box>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font fontName="SansSerif" size="7" isBold="true" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="344" y="163" width="241" height="16" uuid="6535c118-c7e8-431e-89e2-5c828645f795"/>
+				<box>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font fontName="SansSerif" size="8" isBold="true" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" Signature:"]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="344" y="179" width="241" height="16" uuid="f7db4814-9c23-4f49-beb2-3d67c5bfc1a7"/>
+				<box>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="8" isBold="true" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Authorised Signatory:"]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="344" y="195" width="241" height="16" uuid="c2bd8f1c-7e8c-4e52-807b-c57eef84f816"/>
+				<box>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font fontName="SansSerif" size="8" isBold="true" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" Name:"+$F{user_code}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="344" y="211" width="241" height="16" uuid="b1e553ab-8033-4c53-89a0-2c6e6d747e81"/>
+				<box>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font fontName="SansSerif" size="8" isBold="true" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" Designation:"]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00" isBlankWhenNull="true">
+				<reportElement x="0" y="1" width="24" height="12" uuid="d32dc582-8274-47c5-8002-df2b9a82c952"/>
+				<box>
+					<leftPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

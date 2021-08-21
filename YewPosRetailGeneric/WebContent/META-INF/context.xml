@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<Context antiJARLocking="true" path="/">
+        <Resource name="jdbc/PharmaApp" 
+    	 
+		type="javax.sql.DataSource"
+		factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"
+		driverClassName="com.mysql.jdbc.Driver"
+		url="jdbc:mysql://192.168.1.26:3306/generalretailpos"
+		username="root"
+		password="root"
+		initialSize="10"
+		maxActive="450"
+		maxIdle="300"
+		minIdle="100"
+		maxWait="30000"
+		validationQuery="SELECT 1"
+		testOnBorrow="true"
+		minEvictableIdleTimeMillis="5000"
+		removeAbandoned="true"
+		removeAbandonedTimeout="90"
+		logAbandoned="false"  />
+
+</Context>
+
+
+
+<!--generalretailpos_128
+url="jdbc:mysql://192.168.1.133:3306/generalretailpos
+url="jdbc:mysql://192.168.1.129:3306/amarbazar"
+url="jdbc:mysql://192.168.1.157:3306/retail_testing"  
+			url="jdbc:mysql://192.168.1.157:3306/generalretailpos"
+    	   username="root"
+           password="Sharobi@123"
+	 		  url="jdbc:mysql://192.168.1.165:3306/generalretailpos_sanjib"  
+	    	  username="root"
+			  password="root" -->
